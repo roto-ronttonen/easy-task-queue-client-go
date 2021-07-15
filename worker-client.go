@@ -1,6 +1,7 @@
 package easytaskqueueclientgo
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"log"
@@ -93,7 +94,7 @@ func HandleConnection(conn net.Conn, workerClient *WorkerClient, task func()) {
 		return
 	}
 
-	str := string(buf)
+	str := string(bytes.Trim(buf, "\x00"))
 
 	fmt.Printf("Received command: %s", str)
 
