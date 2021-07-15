@@ -1,6 +1,9 @@
 package easytaskqueueclientgo
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 type Client struct {
 	Connection *EasyTaskQueueConnection
@@ -14,7 +17,7 @@ func NewClient(address string) *Client {
 }
 
 func (client *Client) SendTask(taskType string) error {
-	message, err := SendTcp(client.Connection.EasyTaskQueueAddress, taskType)
+	message, err := SendTcp(client.Connection.EasyTaskQueueAddress, fmt.Sprintf("client:task:%s", taskType))
 	if err != nil {
 		return err
 	}
