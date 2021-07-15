@@ -16,6 +16,8 @@ func main() {
 
 	err := workerClient.Start(add)
 
+	defer workerClient.Disconnect()
+
 	if err != nil {
 		log.Fatal(err.Error())
 	}
