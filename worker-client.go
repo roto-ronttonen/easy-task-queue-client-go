@@ -73,7 +73,7 @@ func ListenForTaskStart(workerClient *WorkerClient, task func()) error {
 }
 
 func HandleConnection(conn net.Conn, workerClient *WorkerClient, task func()) {
-	buf := make([]byte, 1024)
+	buf := make([]byte, 64)
 
 	workerClient.Lock.Lock()
 	if !workerClient.Connection.ConnectedStatus {

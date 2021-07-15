@@ -32,7 +32,7 @@ func SendTcp(address string, message string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	reply := make([]byte, 1024)
+	reply := make([]byte, 64)
 
 	_, err = tcpConn.Read(reply)
 
