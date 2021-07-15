@@ -96,7 +96,7 @@ func HandleConnection(conn net.Conn, workerClient *WorkerClient, task func()) {
 
 	str := string(bytes.Trim(buf, "\x00"))
 
-	fmt.Printf("Received command: %s", str)
+	log.Printf("Received command: %s", str)
 
 	message := strings.Split(str, ":")
 
