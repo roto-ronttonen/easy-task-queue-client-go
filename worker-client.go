@@ -16,7 +16,7 @@ type WorkerClient struct {
 	Connection *EasyTaskQueueConnection
 	TaskType   string
 	ListenPort string
-	Lock       *sync.Mutex
+	Lock       sync.Mutex
 }
 
 func NewWorkerClient(address string, taskType string) *WorkerClient {
