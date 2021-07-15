@@ -93,7 +93,11 @@ func HandleConnection(conn net.Conn, workerClient *WorkerClient, task func()) {
 		return
 	}
 
-	message := strings.Split(string(buf), ":")
+	str := string(buf)
+
+	fmt.Printf("Received command: %s", str)
+
+	message := strings.Split(str, ":")
 
 	if len(message) != 2 {
 		log.Print("Invalid message")
@@ -136,6 +140,7 @@ func (workerClient *WorkerClient) Connect() error {
 	}
 
 	if reply != "success" {
+		log.Printf("%v, %s, %d, %d", reply != "success", reply, len(reply), len("success"))
 		return errors.New(reply)
 	}
 	workerClient.Lock.Lock()

@@ -1,10 +1,10 @@
 package easytaskqueueclientgo
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"net"
-	"strings"
 	"time"
 )
 
@@ -40,7 +40,7 @@ func SendTcp(address string, message string) (string, error) {
 		return "", err
 	}
 
-	r := strings.TrimSpace(string(reply))
+	r := string(bytes.Trim(reply, "\x00"))
 
 	log.Printf("Received: %s", r)
 
