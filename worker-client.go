@@ -32,6 +32,7 @@ func NewWorkerClient(address string, taskType string) *WorkerClient {
 }
 
 func HeartbeatRoutine(workerClient *WorkerClient) {
+	log.Print("Started heartbeat routine")
 	for {
 		time.Sleep(30 * time.Second)
 		err := workerClient.RunHeartbeat()
@@ -56,6 +57,7 @@ func ListenForTaskStart(workerClient *WorkerClient, task func()) error {
 	}
 	// Setup heartbeat routine
 	go HeartbeatRoutine(workerClient)
+	log.Printf("Started listening for requests")
 	for {
 		conn, err := ln.Accept()
 		if err != nil {
