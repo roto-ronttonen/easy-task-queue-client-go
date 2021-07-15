@@ -22,7 +22,7 @@ func NewWorkerClient(address string, taskType string) *WorkerClient {
 	conn := NewConnection(address)
 	p := os.Getenv("PORT")
 	if len(p) == 0 {
-		p = "1993"
+		p = "1994"
 	}
 	return &WorkerClient{
 		Connection: conn,
