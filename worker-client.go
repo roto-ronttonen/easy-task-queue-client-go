@@ -136,7 +136,7 @@ func (workerClient *WorkerClient) Connect() error {
 	}
 
 	if reply != "success" {
-		return errors.New(string(reply))
+		return errors.New(reply)
 	}
 	workerClient.Lock.Lock()
 	workerClient.Connection.ConnectedStatus = true
@@ -160,7 +160,7 @@ func (workerClient *WorkerClient) RunHeartbeat() error {
 
 	if reply != "success" {
 		workerClient.Connection.ConnectedStatus = false
-		return errors.New(string(reply))
+		return errors.New(reply)
 	}
 
 	return nil
@@ -175,7 +175,7 @@ func (workerClient *WorkerClient) Disconnect() error {
 	}
 
 	if reply != "success" {
-		return errors.New(string(reply))
+		return errors.New(reply)
 	}
 
 	workerClient.Connection.ConnectedStatus = false
@@ -191,7 +191,7 @@ func (workerClient *WorkerClient) SendReady() error {
 	}
 
 	if reply != "success" {
-		return errors.New(string(reply))
+		return errors.New(reply)
 	}
 
 	return nil

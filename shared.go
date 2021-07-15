@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"strings"
 	"time"
 )
 
@@ -26,6 +27,7 @@ func SendTcp(address string, message string) (string, error) {
 		return "", err
 	}
 
+	log.Printf("Sent message: %s", message)
 	_, err = tcpConn.Write([]byte(message))
 	if err != nil {
 		return "", err
@@ -38,7 +40,11 @@ func SendTcp(address string, message string) (string, error) {
 		return "", err
 	}
 
-	return string(reply), nil
+	r := strings.TrimSpace(string(reply))
+
+	log.Printf("Received: %s", r)
+
+	return r, nil
 
 }
 
