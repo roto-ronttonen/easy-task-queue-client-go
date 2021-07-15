@@ -6,7 +6,7 @@ type Client struct {
 	Connection *EasyTaskQueueConnection
 }
 
-func (client *Client) NewClient(address string) *Client {
+func NewClient(address string) *Client {
 	connection := NewConnection(address)
 	return &Client{
 		Connection: connection,
