@@ -14,4 +14,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+
+	err = client.SendTaskWithData("add", "arbitary data")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 }

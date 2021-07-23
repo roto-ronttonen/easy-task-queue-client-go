@@ -28,3 +28,16 @@ func (client *Client) SendTask(taskType string) error {
 
 	return nil
 }
+
+func (client *Client) SendTaskWithData(taskType string, data string) error {
+	message, err := SendTcp(client.Connection.EasyTaskQueueAddress, fmt.Sprintf("client:task:%s:%s", taskType, data))
+	if err != nil {
+		return err
+	}
+
+	if message != "success" {
+		return errors.New(message)
+	}
+
+	return nil
+}

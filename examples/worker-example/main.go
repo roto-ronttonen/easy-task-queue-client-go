@@ -6,7 +6,7 @@ import (
 	easytaskqueueclientgo "github.com/roto-ronttonen/easy-task-queue-client-go"
 )
 
-func add() {
+func add(data string) {
 	a := 1 + 1
 	log.Printf("%d", a)
 }

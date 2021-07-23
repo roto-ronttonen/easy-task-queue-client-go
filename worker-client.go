@@ -51,7 +51,7 @@ func HeartbeatRoutine(workerClient *WorkerClient) {
 
 }
 
-func ListenForTaskStart(workerClient *WorkerClient, task func()) error {
+func ListenForTaskStart(workerClient *WorkerClient, task func(data string)) error {
 	ln, err := net.Listen("tcp", fmt.Sprintf(":%s", workerClient.ListenPort))
 	if err != nil {
 		return err
@@ -72,7 +72,7 @@ func ListenForTaskStart(workerClient *WorkerClient, task func()) error {
 	}
 }
 
-func HandleConnection(conn net.Conn, workerClient *WorkerClient, task func()) {
+func HandleConnection(conn net.Conn, workerClient *WorkerClient, task func(data string)) {
 	buf := make([]byte, 64)
 
 	workerClient.Lock.Lock()
@@ -100,7 +100,7 @@ func HandleConnection(conn net.Conn, workerClient *WorkerClient, task func()) {
 
 	message := strings.Split(str, ":")
 
-	if len(message) != 2 {
+	if len(message) != 2 && len(message) != 3 {
 		log.Print("Invalid message")
 		conn.Write([]byte("Invalid message"))
 		conn.Close()
@@ -114,13 +114,19 @@ func HandleConnection(conn net.Conn, workerClient *WorkerClient, task func()) {
 		return
 	}
 
+	data := ""
+
+	if len(message) == 3 {
+		data = message[2]
+	}
+
 	conn.Write([]byte("worker:ack"))
 	conn.Close()
-	task()
+	task(data)
 	workerClient.SendReady()
 }
 
-func (workerClient *WorkerClient) Start(task func()) error {
+func (workerClient *WorkerClient) Start(task func(data string)) error {
 	// Create connection
 	err := workerClient.Connect()
 	if err != nil {
